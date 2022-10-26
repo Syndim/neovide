@@ -48,7 +48,7 @@ fn build_nvim_cmd() -> Result<TokioCommand> {
 fn create_platform_shell_command(command: &str, args: &[&str]) -> StdCommand {
     if cfg!(target_os = "windows") && SETTINGS.get::<CmdLineSettings>().wsl {
         let mut result = StdCommand::new("wsl");
-        result.args(["$SHELL", "-lc"]);
+        result.args(&["/bin/sh", "-lc"]);
         result.arg(format!("{} {}", command, args.join(" ")));
 
         #[cfg(windows)]
@@ -190,7 +190,7 @@ fn nvim_cmd_impl(bin: String, mut args: Vec<String>) -> TokioCommand {
     if cfg!(target_os = "windows") && SETTINGS.get::<CmdLineSettings>().wsl {
         args.insert(0, bin);
         let mut cmd = TokioCommand::new("wsl");
-        cmd.args(["$SHELL", "-lc", &args.join(" ")]);
+        cmd.args(["/bin/sh", "-lc", &args.join(" ")]);
         cmd
     } else {
         let mut cmd = TokioCommand::new(bin);
