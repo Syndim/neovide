@@ -89,7 +89,7 @@ fn neovim_ok(bin: &str, args: &[String]) -> Result<bool> {
             // The output is not utf8 on Windows and can contain special characters.
             // But a lossy conversion is OK for our purposes
             let stdout = String::from_utf8_lossy(&output.stdout);
-            if !(stdout.starts_with("NVIM v") && output.stderr.is_empty()) {
+            if !stdout.starts_with("NVIM v") {
                 let error_message_prefix = format!(
                     concat!(
                         "ERROR: Unexpected output from neovim binary:\n",
