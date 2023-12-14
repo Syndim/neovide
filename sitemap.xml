@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://neovide.dev/</loc>
-        <lastmod>2023-08-19T06:04:38.484Z</lastmod>
+        <lastmod>2023-12-14T08:05:51.728Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/command-line-reference</loc>
-        <lastmod>2023-08-19T06:04:38.280Z</lastmod>
+        <lastmod>2023-12-14T08:05:50.488Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/config-file</loc>
-        <lastmod>2023-08-19T06:04:38.284Z</lastmod>
+        <lastmod>2023-12-14T08:05:50.484Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/configuration</loc>
-        <lastmod>2023-08-19T06:04:38.316Z</lastmod>
+        <lastmod>2023-12-14T08:05:50.724Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/editing-with-external-tools</loc>
-        <lastmod>2023-08-19T06:04:38.340Z</lastmod>
+        <lastmod>2023-12-14T08:05:50.724Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/faq</loc>
-        <lastmod>2023-08-19T06:04:38.372Z</lastmod>
+        <lastmod>2023-12-14T08:05:50.956Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/features</loc>
-        <lastmod>2023-08-19T06:04:38.424Z</lastmod>
+        <lastmod>2023-12-14T08:05:51.436Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/installation</loc>
-        <lastmod>2023-08-19T06:04:38.508Z</lastmod>
+        <lastmod>2023-12-14T08:05:51.956Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/maintainer-cookbook</loc>
-        <lastmod>2023-08-19T06:04:38.520Z</lastmod>
+        <lastmod>2023-12-14T08:05:52.020Z</lastmod>
     </url>
     <url>
         <loc>https://neovide.dev/troubleshooting</loc>
-        <lastmod>2023-08-19T06:04:38.656Z</lastmod>
+        <lastmod>2023-12-14T08:05:53.028Z</lastmod>
     </url>
 </urlset>

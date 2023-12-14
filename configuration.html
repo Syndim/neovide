@@ -188,6 +188,9 @@ while you can have as many fallback fonts as you want (even 0) and as many optio
 <li>can be one of the following:
 <ul>
 <li><code>hX</code> — Sets the font size to <code>X</code> points, while <code>X</code> can be any (even floating-point) number.</li>
+<li><code>wX</code> (available since 0.11.2) — Sets the width <strong>relative offset</strong> to be <code>X</code> points, while <code>X</code>
+can be again any number. Negative values shift characters closer together, positive values
+shift them further apart.</li>
 <li><code>b</code> — Sets the font <strong>bold</strong>.</li>
 <li><code>i</code> — Sets the font <em>italic</em>.</li>
 <li><code>#e-X</code> (available since 0.10.2) — Sets edge pixels to be drawn opaquely or
@@ -291,6 +294,27 @@ vim.g.neovide_floating_blur_amount_y = 2.0
 <p><strong>Available since 0.9.</strong></p>
 <p>Setting <code>g:neovide_floating_blur_amount_x</code> and <code>g:neovide_floating_blur_amount_y</code> controls the blur
 radius on the respective axis for floating windows.</p>
+<h4 id="floating-shadow"><a class="header" href="#floating-shadow">Floating Shadow</a></h4>
+<p>VimScript:</p>
+<pre><code class="language-vim">let g:neovide_floating_shadow = v:true
+let g:neovide_floating_z_height = 10
+let g:neovide_light_angle_degrees = 45
+let g:neovide_light_radius = 5
+</code></pre>
+<p>Lua:</p>
+<pre><code class="language-lua">vim.g.neovide_floating_shadow = true
+vim.g.neovide_floating_z_height = 10
+vim.g.neovide_light_angle_degrees = 45
+vim.g.neovide_light_radius = 5
+</code></pre>
+<p><strong>Unreleased yet.</strong></p>
+<p>Setting <code>g:neovide_floating_shadow</code> to false will disable the shadow borders for floating windows.
+The other variables configure the shadow in various ways:</p>
+<ul>
+<li><code>g:neovide_floating_z_height</code> sets the virtual height of the floating window from the ground plane</li>
+<li><code>g:neovide_light_angle_degrees</code> sets the angle from the screen normal of the casting light</li>
+<li><code>g:neovide_light_radius</code> sets the radius of the casting light</li>
+</ul>
 <h4 id="transparency"><a class="header" href="#transparency">Transparency</a></h4>
 <p>VimScript:</p>
 <pre><code class="language-vim">let g:neovide_transparency = 0.8
@@ -308,7 +332,20 @@ to that value.</p>
 <p>Lua:</p>
 <pre><code class="language-lua">vim.g.neovide_scroll_animation_length = 0.3
 </code></pre>
-<p>Sets how long the scroll animation takes to complete, measured in seconds.</p>
+<p>Sets how long the scroll animation takes to complete, measured in seconds. Note that the timing is
+not completely accurate and might depend slightly on have far you scroll, so experimenting is
+encouraged in order to tune it to your liking.</p>
+<h4 id="far-scroll-lines"><a class="header" href="#far-scroll-lines">Far scroll lines</a></h4>
+<p><strong>Unreleased yet.</strong></p>
+<p>VimScript:</p>
+<pre><code class="language-vim">let g:neovide_scroll_animation_far_lines = 1
+</code></pre>
+<p>Lua:</p>
+<pre><code class="language-lua">vim.g.neovide_scroll_animation_far_lines = 1
+</code></pre>
+<p>When scrolling more than one screen at a time, only this many lines at the end of the scroll action
+will be animated. Set it to 0 to snap to the final position without any animation, or to something
+big like 9999 to always scroll the whole screen, much like Neovide &lt;= 0.10.4 did.</p>
 <h4 id="hiding-the-mouse-when-typing"><a class="header" href="#hiding-the-mouse-when-typing">Hiding the mouse when typing</a></h4>
 <p>VimScript:</p>
 <pre><code class="language-vim">let g:neovide_hide_mouse_when_typing = v:false
@@ -321,17 +358,17 @@ only affects the mouse if it is currently within the bounds of the neovide windo
 mouse makes it visible again.</p>
 <h4 id="underline-automatic-scaling"><a class="header" href="#underline-automatic-scaling">Underline automatic scaling</a></h4>
 <p>VimScript:</p>
-<pre><code class="language-vim">let g:neovide_underline_automatic_scaling = v:false
+<pre><code class="language-vim">let g:neovide_underline_stroke_scale = 1.0
 </code></pre>
 <p>Lua:</p>
-<pre><code class="language-lua">vim.g.neovide_underline_automatic_scaling = false
+<pre><code class="language-lua">vim.g.neovide_underline_stroke_scale = 1.0
 </code></pre>
-<p><strong>Available since 0.10.</strong></p>
-<p>Setting <code>g:neovide_underline_automatic_scaling</code> to a boolean value determines whether automatic
-scaling of text underlines (including undercurl, underdash, etc.) is enabled. Noticeable for font
-sizes above 15.</p>
-<p><strong>Note</strong>: This is currently glitchy, and leads to some underlines being clipped by the line of text
-below.</p>
+<p><strong>Unrelease yet.</strong></p>
+<p>Setting <code>g:neovide_underline_stroke_scale</code> to a floating point will increase or decrease the stroke
+width of the underlines (including undercurl, underdash, etc.). If the scaled stroke width is less
+than 1, it is clamped to 1 to prevent strange aliasing.</p>
+<p><strong>Note</strong>: This is currently glitchy if the scale is too large, and leads to some underlines being
+clipped by the line of text below.</p>
 <h4 id="theme"><a class="header" href="#theme">Theme</a></h4>
 <p>VimScript:</p>
 <pre><code class="language-vim">let g:neovide_theme = 'auto'
@@ -353,8 +390,8 @@ system theme, and will update <code>background</code> when the system theme chan
 </code></pre>
 <p>Setting <code>g:neovide_refresh_rate</code> to a positive integer will set the refresh rate of the app. This is
 limited by the refresh rate of your physical hardware, but can be lowered to increase battery life.</p>
-<p>Also do note that Neovide's frame pacing is far from optimal at the moment, so better hardware might
-not mean better FPS.</p>
+<p>This setting is only effective when not using vsync, for example by passing <code>--no-vsync</code> on the
+commandline.</p>
 <h4 id="idle-refresh-rate"><a class="header" href="#idle-refresh-rate">Idle Refresh Rate</a></h4>
 <p>VimScript:</p>
 <pre><code class="language-vim">let g:neovide_refresh_rate_idle = 5
