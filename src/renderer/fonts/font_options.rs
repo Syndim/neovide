@@ -214,10 +214,19 @@ impl FontOptions {
             })
             .unwrap_or_else(|| self.normal.clone());
 
+        let style_name = style.name().map(str::to_string);
+        let normal_style_name = self.normal.first().map(|s| s.style.clone());
+
+        let style_name = match (style_name, normal_style_name) {
+            (Some(style_name), _) => Some(style_name),
+            (None, Some(Some(normal_style_name))) => Some(normal_style_name),
+            _ => None,
+        };
+
         fonts
             .into_iter()
             .map(|font| FontDescription {
-                style: style.name().map(str::to_string),
+                style: style_name.clone(),
                 ..font
             })
             .collect()
